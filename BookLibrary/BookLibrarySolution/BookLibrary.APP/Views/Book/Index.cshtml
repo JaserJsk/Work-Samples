@@ -1,0 +1,115 @@
+﻿@model BookLibrary.APP.Models.BookPageModel
+@{
+    ViewData["Title"] = "Index";
+    ViewData["titleselected"] = "";
+    ViewData["authorselected"] = "";
+    if (Model.searchType == "title")
+    {
+        ViewData["titleselected"] = "selected";
+    }
+    else if (Model.searchType == "author")
+    {
+        ViewData["authorselected"] = "selected";
+    }
+}
+
+<!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+<script src="~/js/bundled.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+
+<div class="container">
+    <div class="row">
+
+        <h2>List Of Books</h2>
+
+        <br />
+
+        <div class="col-xs-12">
+            <form method="get" action="/Book">
+                <div class="input-group">
+                    <div class="input-group-btn search-panel">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span id="search_concept">Search by</span>
+                        </button>
+
+                    </div>
+                    <input type="hidden" name="search_param" value="all" id="search_param">
+                    <input type="text" class="form-control" name="str" placeholder="Author or Title..." value="@Model.searchTerm">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                    </span>
+                </div>
+            </form>
+
+            <script>
+                $(document).ready(function () {
+                    $("#searchtype li").click(function () {
+                        $("#search_param").val($(this).attr("value"));
+                    });
+                });
+            </script>
+
+            <br />
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Author
+                        </th>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Genre
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                        <th>
+                            Publish Date
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.BookModels)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Author)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Genre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+                            <td>
+                                @item.PublishingDate.ToShortDateString()
+                            </td>
+
+                        </tr>
+
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
