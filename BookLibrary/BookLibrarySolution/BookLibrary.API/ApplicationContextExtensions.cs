@@ -46,7 +46,7 @@ namespace BookLibrary.API
             /*
              * Read XML data with helper into myFile object
              */
-            String xmlfile = "./Seeds/xml/books.xml";
+            String xmlfile = "./Seeds/books.xml";
             DataFromFile myFile = new Helpers.FileHelper().XML_File_To_Object<DataFromFile>(xmlfile);
 
             // Parse through myFile.books to get the real book data
