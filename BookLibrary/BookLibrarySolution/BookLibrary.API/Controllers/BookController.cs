@@ -9,6 +9,7 @@ using System.Collections.Generic;
 
 namespace BookLibrary.API.Controllers
 {
+    // Adding the route attribute to the controller class only once.
     [Route("api/authors")]
     public class BookController : Controller
     {

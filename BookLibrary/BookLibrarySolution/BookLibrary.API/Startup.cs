@@ -26,10 +26,15 @@ namespace BookLibrary.API
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // Adding a refrence to MVC service Middleware.
             services.AddMvc()
+
+                // Optional - Default output formatter is JSON. 
+                // With this we can add XML to our list of output formatters
                 .AddMvcOptions(o =>
                     o.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter()))
 
+                // Optional - Will prevent lowercase as default for JSON properties.
                 .AddJsonOptions(o =>
                 {
                     if (o.SerializerSettings.ContractResolver != null)
@@ -60,6 +65,7 @@ namespace BookLibrary.API
             //loggerFactory.AddDebug();
             loggerFactory.AddNLog();
 
+            // The Exception Middleware will try to catch (Exceptions) before handing over the request to the MVC Middleware.
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -68,6 +74,8 @@ namespace BookLibrary.API
             // Add seed data to database.
             applicationContext.EnsureSeedDataForContext();
 
+            // Adding the Status code pages Middleware to the request pipeline.
+            // This will show status codes on the client side.
             app.UseStatusCodePages();
 
             AutoMapper.Mapper.Initialize(cfg =>
@@ -83,6 +91,8 @@ namespace BookLibrary.API
                 cfg.CreateMap<Entities.Book, Models.BookWithAuthorDto>();
             });
 
+            // Adding the MVC Middleware to the request pipeline.
+            // MVC Middleware will handle (HTTP) requests.
             app.UseMvc();
         }
     }
