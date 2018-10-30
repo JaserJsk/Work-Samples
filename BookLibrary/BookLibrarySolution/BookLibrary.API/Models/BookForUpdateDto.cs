@@ -14,7 +14,7 @@ namespace BookLibrary.API.Models
         public string Genre { get; set; }
 
         [Required(ErrorMessage = "You should provide a description value.")]
-        [MaxLength(200)]
+        [MaxLength(400)]
         public string Description { get; set; }
 
         public decimal Price { get; set; }

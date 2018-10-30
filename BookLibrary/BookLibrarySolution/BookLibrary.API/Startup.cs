@@ -30,7 +30,7 @@ namespace BookLibrary.API
             services.AddMvc()
 
                 // Optional - Default output formatter is JSON. 
-                // With this we can add XML to our list of output formatters
+                // With this we can add XML to our list of output formatters.
                 .AddMvcOptions(o =>
                     o.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter()))
 

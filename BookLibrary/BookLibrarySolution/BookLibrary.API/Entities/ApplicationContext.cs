@@ -12,10 +12,10 @@ namespace BookLibrary.API.Entities
            : base(options)
         {
             // Enable only the first time running the application to create the database.
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
 
             // Enable after database has been created.
-            //Database.Migrate();
+            Database.Migrate();
         }
 
         public DbSet<Author> Authors { get; set; }
