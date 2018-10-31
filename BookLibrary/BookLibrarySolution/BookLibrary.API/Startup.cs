@@ -96,6 +96,12 @@ namespace BookLibrary.API
             // This will show status codes on the client side.
             app.UseStatusCodePages();
 
+            /*
+             * AutoMapper will map property names on the source object - 
+             * to the same property names on the destination obj.
+             * By default it will ignore Null reference exception from source to target.
+             * This means that if a property does not exists then it will be ignored.
+             */
             AutoMapper.Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<Entities.Author, Models.AuthorWithoutBookDto>();
