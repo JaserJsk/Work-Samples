@@ -15,19 +15,19 @@ namespace BookLibrary.APP.Controllers
         public ActionResult Index(string search_param, string str)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:44368/");
+            client.BaseAddress = new Uri("http://localhost:54162/");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var apiRoute = "api/authors/books";
 
             if (str != null && str.Trim() != "")
             {
-                if (search_param == "title")
-                {
-                    apiRoute = "api/authors/books/search/title/" + str;
-                }
-                else if (search_param == "author")
+                if (search_param == "author")
                 {
                     apiRoute = "api/authors/books/search/author/" + str;
+                }
+                else if (search_param == "title")
+                {
+                    apiRoute = "api/authors/books/search/title/" + str;
                 }
                 else if (search_param == "all")
                 {
@@ -39,9 +39,9 @@ namespace BookLibrary.APP.Controllers
 
             var book = response.Content.ReadAsAsync<IEnumerable<BookModel>>().Result;
             BookPageModel bpm = new BookPageModel();
-            bpm.BookModels = book;
             bpm.searchTerm = str;
             bpm.searchType = search_param;
+            bpm.BookModels = book;
 
             return View(bpm);
         }

@@ -11,10 +11,16 @@ namespace BookLibrary.API.Entities
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
            : base(options)
         {
-            // Enable only the first time running the application to create the database.
+            // If database is created with "EnsureCreated" then migrations will not work.
             //Database.EnsureCreated();
 
-            // Enable after database has been created.
+            /*
+             * Use this approach if need to use migrations.
+             * When there is no database, open "Package Manager Console" and type:
+             * PM> Add-Migration InitialMigration.
+             */
+
+            // This will enable automatic migrations.
             Database.Migrate();
         }
 
