@@ -15,10 +15,12 @@ namespace BookLibrary.API
 {
     public class Startup
     {
+        // IConfiguration Instance.
         public static IConfiguration Configuration { get; private set; }
 
         public Startup(IConfiguration configuration)
         {
+            // Adding the field Instances to the injected Instances.
             Configuration = configuration;
         }
 
@@ -45,11 +47,20 @@ namespace BookLibrary.API
                     }
                 });
 
+            /*
+             * AddSingelton - Will be created the first time they are requested.
+             * AddScoped - Will be created once per request.
+             * AddTransient - Will be created each time they are requested.
+             * Current mail service is lightweight and stateless so we will go with - AddTransient lifecycle.
+             */
+            #region Mail Service
 #if DEBUG
             services.AddTransient<IMailService, LocalMailService>();
 #else
             services.AddTransient<IMailService, CloudMailService>();
-#endif
+#endif 
+            #endregion
+
             // Setting the connectionstring
             var connectionString = Startup.Configuration["connectionStrings:BookLibraryDBConnectionString"];
             services.AddDbContext<ApplicationContext>(o => o.UseSqlServer(connectionString));
@@ -61,9 +72,14 @@ namespace BookLibrary.API
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
             ApplicationContext applicationContext)
         {
+            // This will log to the console window.
             //loggerFactory.AddConsole();
-            //loggerFactory.AddDebug();
-            loggerFactory.AddNLog();
+
+            // This will log debug window.
+            loggerFactory.AddDebug();
+
+            // This will log to file.
+            //loggerFactory.AddNLog();
 
             // The Exception Middleware will try to catch (Exceptions) before handing over the request to the MVC Middleware.
             if (env.IsDevelopment())

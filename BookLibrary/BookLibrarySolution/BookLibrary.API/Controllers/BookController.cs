@@ -13,8 +13,13 @@ namespace BookLibrary.API.Controllers
     [Route("api/authors")]
     public class BookController : Controller
     {
+        // ILogger Instance.
         private ILogger<BookController> _logger;
+
+        // IMailService Instance.
         private IMailService _mailService;
+
+        // IBookLibraryRepository Instance.
         private IBookLibraryRepository _bookLibraryRepository;
 
         #region Constructor
@@ -22,7 +27,8 @@ namespace BookLibrary.API.Controllers
             IMailService mailService,
             IBookLibraryRepository bookStoreRepository)
         {
-            //_logger = logger;
+            // Adding the field Instances to the injected Instances.
+            _logger = logger;
             _mailService = mailService;
             _bookLibraryRepository = bookStoreRepository;
         }
@@ -90,7 +96,7 @@ namespace BookLibrary.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Exeption while getting all books from all authors", ex);
+                _logger.LogInformation($"Exeption while getting all books by author", ex);
                 return StatusCode(500, "A problem happend while handeling your request.");
             }
         }
@@ -110,7 +116,7 @@ namespace BookLibrary.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Exeption while getting all books from all authors", ex);
+                _logger.LogInformation($"Exeption while getting all books by title", ex);
                 return StatusCode(500, "A problem happend while handeling your request.");
             }
         }
@@ -130,7 +136,7 @@ namespace BookLibrary.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Exeption while getting all books from all authors", ex);
+                _logger.LogInformation($"Exeption while getting all books by search term", ex);
                 return StatusCode(500, "A problem happend while handeling your request.");
             }
         }
@@ -369,6 +375,7 @@ namespace BookLibrary.API.Controllers
                 return StatusCode(500, "A problem happend while handeling your request.");
             }
 
+            // Sending and email to developer notifying that a book has been deleted.
             _mailService.Send("Book deleted.",
                     $"Book {bookEntity.Title} with id {bookEntity.Id} was deleted.");
 
