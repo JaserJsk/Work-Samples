@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace BookLibrary.API.Controllers
 {
     // Adding the route attribute to the controller class only once.
-    [Route("api/authors")]
+    [Route("api/_authors")]
     public class BookController : Controller
     {
         // ILogger Instance.
@@ -50,7 +50,7 @@ namespace BookLibrary.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Exeption while getting all books from all authors", ex);
+                _logger.LogInformation($"Exeption while getting all books from all _authors", ex);
                 return StatusCode(500, "A problem happend while handeling your request.");
             }
         }
