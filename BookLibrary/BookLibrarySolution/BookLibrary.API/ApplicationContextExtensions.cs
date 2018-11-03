@@ -23,8 +23,8 @@ namespace BookLibrary.API
             context.Authors.AddRange(_authors);
             context.SaveChanges();
         }
-        
-        public static void ReadFileAndPopulateDatabase(String file)
+
+        private static void ReadFileAndPopulateDatabase(String file)
         {
             /*
              * Read XML file data with helper into object.
