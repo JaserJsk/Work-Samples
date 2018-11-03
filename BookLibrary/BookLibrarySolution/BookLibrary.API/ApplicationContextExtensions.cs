@@ -41,8 +41,10 @@ namespace BookLibrary.API
                 // Current book has no author yet = add it.
                 if (_authors.Count == 0)
                 {
-                    // Use function defined above, _authors passed as "ref" because its value changes and -
-                    // We need the changes after the function was already executed (AddAuthorFromBook)
+                    /* 
+                     * Use function defined above, authors passed as "ref" because its value changes and -
+                     * we need the changes after the function was already executed (AddAuthorFromBook) 
+                     */
                     AddAuthorFromBook(ref _authors, book);
                 }
                 else
