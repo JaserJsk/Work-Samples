@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using NLog.Extensions.Logging;
+using System;
 
 namespace BookLibrary.API
 {
@@ -61,10 +62,34 @@ namespace BookLibrary.API
 #endif 
             #endregion
 
-            // Setting the connectionstring
-            var connectionString = Startup.Configuration["connectionStrings:BookLibraryDBConnectionString"];
-            // By default Scoped lifecycle will be used for DbContext.
-            services.AddDbContext<ApplicationContext>(o => o.UseSqlServer(connectionString));
+            // Setting the local connectionstring
+            var connectionStringLocal = Startup.Configuration["connectionStrings:BookLibraryDBConnectionString"];
+
+            // Setting the production connectionstring
+            var connectionStringProduction = Startup.Configuration["connectionStrings:LibraryDbConnection"];
+
+
+
+
+
+            // Use SQL Database if in Azure, otherwise, use SQLite
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            {
+                services.AddDbContext<ApplicationContext>(o => o.UseSqlServer(connectionStringProduction));
+            }              
+            else
+            {
+                // By default Scoped lifecycle will be used for DbContext.
+                services.AddDbContext<ApplicationContext>(o => o.UseSqlServer(connectionStringLocal));
+            }
+
+
+
+            // Automatically perform database migration
+            services.BuildServiceProvider().GetService<ApplicationContext>().Database.Migrate();
+
+
+
 
             services.AddScoped<IBookLibraryRepository, BookLibraryRepository>();
         }
