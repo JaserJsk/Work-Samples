@@ -1,1 +1,1 @@
-Sample Projects Created By Jonas Jsk [Jonas.Jsk@outlook.com]
+Sample Projects Created By Jaser Jsk [Jaser.Jsk@gmail.com]
